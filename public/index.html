@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Draft Board</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E%F0%9F%8F%80%3C/text%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <header id="statusbar">
+      <div class="sb-left">
+        <span id="league-name">Draft Board</span>
+        <span id="league-meta" class="muted"></span>
+      </div>
+      <div class="sb-center">
+        <span id="clock-label" class="clock-label"></span>
+        <span id="clock-team" class="clock-team">Connecting…</span>
+      </div>
+      <div class="sb-right">
+        <button id="league-setup-btn" class="mode-btn" title="Set up league name, teams, managers, and draft order">⚙ Edit league</button>
+        <span id="conn-dot" class="dot" title="connection"></span>
+        <span id="conn-text" class="muted">starting</span>
+        <span id="updated" class="muted"></span>
+      </div>
+    </header>
+
+    <div id="banner" class="banner hidden"></div>
+
+    <div id="league-setup-overlay" class="modal-overlay" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="ls-title">
+        <div class="modal-head">
+          <h3 id="ls-title">League setup</h3>
+          <button id="ls-close" class="modal-x" type="button" aria-label="Close">✕</button>
+        </div>
+        <p class="modal-sub">
+          League name, teams, managers, and draft order — enter them here. Player search
+          and ADP still come from ESPN; that's the only thing this app pulls from there.
+        </p>
+        <div id="ls-error" class="modal-error hidden"></div>
+
+        <label class="modal-field">
+          <span>League name</span>
+          <input id="ls-name" type="text" maxlength="80" placeholder="e.g. Dynasty Hoops" />
+        </label>
+
+        <div class="modal-row">
+          <label class="modal-field">
+            <span>Draft type</span>
+            <select id="ls-draft-type">
+              <option value="SNAKE">Snake</option>
+              <option value="SNAKE_3RR">Snake (3rd-round reversal)</option>
+              <option value="LINEAR">Linear</option>
+            </select>
+          </label>
+          <label class="modal-field">
+            <span>Rounds</span>
+            <input id="ls-rounds" type="number" min="1" max="40" value="13" />
+          </label>
+        </div>
+
+        <div class="modal-field">
+          <span>Teams, in draft order</span>
+          <div id="ls-teams" class="ls-teams"></div>
+          <button id="ls-add-team" class="chip" type="button">+ Add team</button>
+        </div>
+
+        <div class="modal-actions">
+          <span class="modal-spacer"></span>
+          <button id="ls-cancel" class="chip" type="button">Cancel</button>
+          <button id="ls-save" class="chip primary" type="button">Save league</button>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <section id="board-wrap">
+        <table id="board">
+          <thead>
+            <tr id="board-head"></tr>
+          </thead>
+          <tbody id="board-body"></tbody>
+        </table>
+      </section>
+
+      <aside id="sidebar">
+        <div class="side-head">
+          <h2>Best Available <span id="avail-count" class="muted"></span></h2>
+
+          <div id="manual-bar" class="manual-bar">
+            <span id="manual-hint" class="muted"></span>
+            <button id="undo-pick" class="chip">↩ Undo</button>
+            <button id="restart-draft" class="chip danger">⟲ Restart</button>
+          </div>
+
+          <input
+            id="player-search"
+            class="player-search"
+            type="search"
+            placeholder="Search player…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+
+          <div class="controls">
+            <div class="chips" id="pos-filters">
+              <button data-pos="ALL" class="chip active">ALL</button>
+              <button data-pos="PG" class="chip">PG</button>
+              <button data-pos="SG" class="chip">SG</button>
+              <button data-pos="SF" class="chip">SF</button>
+              <button data-pos="PF" class="chip">PF</button>
+              <button data-pos="C" class="chip">C</button>
+            </div>
+            <div class="chips" id="sort-toggle">
+              <button data-sort="rank" class="chip active">Rank</button>
+              <button data-sort="adp" class="chip">ADP</button>
+            </div>
+          </div>
+        </div>
+        <ol id="avail-list"></ol>
+      </aside>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

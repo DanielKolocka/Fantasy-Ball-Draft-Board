@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.local
+server/sample-response*.json
+server/.cache-*.json
+server/manual-draft.json
+server/league.json
+*.log
+.DS_Store

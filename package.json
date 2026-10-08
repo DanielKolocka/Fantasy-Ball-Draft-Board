@@ -1,0 +1,18 @@
+{
+  "name": "fantasy-ball-draftboard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Manually-run draft board for a private ESPN Fantasy Basketball snake draft — team names and draft order from ESPN, picks recorded by hand (localhost only)",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
